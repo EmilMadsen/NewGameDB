@@ -21,6 +21,10 @@
                 {
                     <a href="@Url.Action("Details","Game",  new {id = item.GameID })"><img class="img-responsive" width="272" height="380" src='@Url.Action("GetImage","Game", new { item.GameID })' /></a>
                 }
+                else
+                {
+                    <a href="@Url.Action("Details","Game",  new {id = item.GameID })"><img class="img-responsive" width="272" height="380" src='~/Assets/NoImage.png' /></a>
+                }
                 @Html.DisplayFor(modelItem => item.Name)
                 <br>
                 Rating:

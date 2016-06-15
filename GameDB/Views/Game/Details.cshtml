@@ -43,12 +43,9 @@
             @Html.DisplayFor(model => model.Game.Author)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Game.ImageMimeType)
-        </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Game.ImageMimeType)
+            @Html.HiddenFor(model => model.Game.ImageMimeType)
         </dd>
 
     </dl>
@@ -58,6 +55,13 @@
             <div class="pull-left" style="margin-right: 10px">
                 <img class="img-thumbnail" width="75" height="75"
                      src="@Url.Action("GetImage","Game", new { Model.Game.GameID })"/>
+            </div>
+        }
+        else
+        {
+            <div class="pull-left" style="margin-right: 10px">
+                <img class="img-thumbnail" width="75" height="75"
+                     src='~/Assets/NoImage.png' />
             </div>
         }
     </div>

@@ -96,7 +96,15 @@
                 <td>
                     @Html.DisplayFor(modelItem => character.Description)
                 </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "Character", new { id = character.CharacterID }, null) |
+                    @Html.ActionLink("Details", "Details", "Character", new { id = character.CharacterID }, null) |
+                    @Html.ActionLink("Delete", "Delete", "Character", new { id = character.CharacterID }, null)
+                </td>
             </tr>
+
+
+    
         }
     }
 </table>

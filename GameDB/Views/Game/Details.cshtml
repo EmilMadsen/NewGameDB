@@ -1,0 +1,98 @@
+﻿@model GameDB.Models.GameWithChars
+
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Game</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Game.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Game.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Game.Rating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Game.Rating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Game.ReleaseDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Game.ReleaseDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Game.Author)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Game.Author)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Game.ImageMimeType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Game.ImageMimeType)
+        </dd>
+
+    </dl>
+    <div>
+        @if (Model.Game.ImageData != null)
+        {
+            <div class="pull-left" style="margin-right: 10px">
+                <img class="img-thumbnail" width="75" height="75"
+                     src="@Url.Action("GetImage","Game", new { Model.Game.GameID })"/>
+            </div>
+        }
+    </div>
+</div>
+<div>
+    <a href="@Url.Action("Create","Character",  new {id = Model.Game.GameID }, null)">Add Character</a>
+</div>
+<p>
+    @Html.ActionLink("Add Game", "Create", "Game", Model.Game.GameID, null) | 
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Game.GameID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Description
+        </th>     
+    </tr>
+
+    @foreach (var character in Model.Characters)
+    {
+        if (character.ParentGameID == Model.Game.GameID)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => character.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => character.Description)
+                </td>
+            </tr>
+        }
+    }
+</table>

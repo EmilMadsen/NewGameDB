@@ -20,6 +20,7 @@ namespace GameDB.Models
         [Required]
         [DisplayName("Release Date")]
         public DateTime ReleaseDate { get; set; }
+        // comment showing nothing
 
         public string Description { get; set; }
 

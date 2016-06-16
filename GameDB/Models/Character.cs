@@ -16,7 +16,7 @@ namespace GameDB.Models
         [Required]
         public string Description { get; set; }
 
-        public String ImageMimeType { get; set; }
+        public string ImageMimeType { get; set; }
         public byte[] ImageData { get; set; }
 
 

@@ -43,12 +43,21 @@
             @Html.DisplayFor(model => model.Game.Author)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Game.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Game.Description)
+        </dd>
+
 
         <dd>
             @Html.HiddenFor(model => model.Game.ImageMimeType)
         </dd>
 
     </dl>
+
     <div>
         @if (Model.Game.ImageData != null)
         {
@@ -66,45 +75,75 @@
         }
     </div>
 </div>
-<div>
-    <a href="@Url.Action("Create","Character",  new {id = Model.Game.GameID }, null)">Add Character</a>
-</div>
-<p>
-    @Html.ActionLink("Add Game", "Create", "Game", Model.Game.GameID, null) | 
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Game.GameID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
 
-<table class="table">
-    <tr>
-        <th>
-            Name
-        </th>
-        <th>
-            Description
-        </th>     
-    </tr>
 
+@if (this.User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Add Character", "Create", "Character", new { id = Model.Game.GameID }, null) |
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Game.GameID }, null)
+    </p>
+}
+@Html.ActionLink("Back to List", "Index")
+
+
+<!--  HERE GOES THE INDEX VIEW of CHARACTERS FOR THIS GAME -->
+<div class="container giefTopMargin">
     @foreach (var character in Model.Characters)
     {
         if (character.ParentGameID == Model.Game.GameID)
         {
-            <tr>
-                <td>
+            <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 dummyImageTest">
+                <div class="indexPlate">
+                    @if (character.ImageData != null)
+                    {
+                        <a href="@Url.Action("Details","Character",  new {id = character.CharacterID })"><img class="img-responsive" width="272" height="380" src='@Url.Action("GetImage","Character", new { id = character.CharacterID })' /></a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Details","Character",  new {id = character.CharacterID })"><img class="img-responsive" width="272" height="380" src='~/Assets/NoImage.png' /></a>
+                    }
                     @Html.DisplayFor(modelItem => character.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => character.Description)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", "Character", new { id = character.CharacterID }, null) |
-                    @Html.ActionLink("Details", "Details", "Character", new { id = character.CharacterID }, null) |
-                    @Html.ActionLink("Delete", "Delete", "Character", new { id = character.CharacterID }, null)
-                </td>
-            </tr>
-
-
-    
+                    <br>
+                </div>
+            </div>
         }
     }
-</table>
+</div>
+
+@if (this.User.IsInRole("Admin"))
+{
+    <table class="table giefTopMargin">
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Description
+            </th>
+        </tr>
+
+        @foreach (var character in Model.Characters)
+        {
+            if (character.ParentGameID == Model.Game.GameID)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => character.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => character.Description)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Character", new { id = character.CharacterID }, null) |
+                        @Html.ActionLink("Details", "Details", "Character", new { id = character.CharacterID }, null) |
+                        @Html.ActionLink("Delete", "Delete", "Character", new { id = character.CharacterID }, null)
+                    </td>
+                </tr>
+
+
+
+            }
+        }
+    </table>
+}

@@ -19,12 +19,14 @@ namespace GameDB.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create(Game game, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
@@ -44,12 +46,14 @@ namespace GameDB.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
             return View(GameRepo.Find(id));
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(Game game, HttpPostedFileBase image)
         {
             if(ModelState.IsValid)
@@ -67,6 +71,7 @@ namespace GameDB.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             GameRepo.Delete(id);

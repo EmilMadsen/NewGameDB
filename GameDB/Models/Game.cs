@@ -19,6 +19,8 @@ namespace GameDB.Models
         [Required]
         public DateTime ReleaseDate { get; set; }
 
+        public string Description { get; set; }
+
         [Required]
         public String Author { get; set; }
 

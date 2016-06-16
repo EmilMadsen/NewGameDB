@@ -19,12 +19,17 @@ namespace GameDB.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
-            return View(new Character());
+            Character c = new Character();
+            c.ParentGameID = (int)Session["ParentID"];
+            Session["ParentID"] = null;
+            return View(c);
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create(Character character, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
@@ -35,13 +40,13 @@ namespace GameDB.Controllers
                     character.ImageData = new byte[image.ContentLength];
                     image.InputStream.Read(character.ImageData, 0, image.ContentLength);
                 }
-                character.ParentGameID = (int)Session["ParentID"];
-                Session["Parent"] = null;
+                
                 CharRepo.InsertOrUpdate(character);
                 return RedirectToAction("Details", "Game", new { id = character.ParentGameID });
             }
             return View();
         }
+
         [HttpGet]
         public ActionResult Details(int id)
         {
@@ -50,22 +55,26 @@ namespace GameDB.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
-            int CharID = CharRepo.Find(id).ParentGameID;
+            int GameID = CharRepo.Find(id).ParentGameID;
             CharRepo.Delete(id);
-            return RedirectToAction("Details", "Game", new { id = CharID });
+            return RedirectToAction("Details", "Game", new { id = GameID });
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
             return View(CharRepo.Find(id));
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(Character character, HttpPostedFileBase image)
         {
+
             if (ModelState.IsValid)
             {
                 if(image != null)
@@ -80,6 +89,21 @@ namespace GameDB.Controllers
             return View(character);
            
         }
-       
+
+        public FileContentResult GetImage(int id)
+        {
+            Character Char = CharRepo.Find(id);
+
+            if (Char != null)
+            {
+                return File(Char.ImageData, Char.ImageMimeType);
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
     }
 }

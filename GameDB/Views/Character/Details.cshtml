@@ -34,17 +34,27 @@
             @Html.DisplayFor(model => model.Description)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ImageMimeType)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ImageMimeType)
-        </dd>
 
     </dl>
+
+    <div>
+        @if (Model.ImageData != null)
+        {
+            <div class="pull-left" style="margin-right: 10px">
+                <img class="img-thumbnail" width="75" height="75" src="@Url.Action("GetImage","Character", new { id = Model.CharacterID })" />
+            </div>
+        }
+        else
+        {
+            <div class="pull-left" style="margin-right: 10px">
+                <img class="img-thumbnail" width="75" height="75"
+                     src='~/Assets/NoImage.png' />
+            </div>
+        }
+    </div>
+
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.CharacterID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to Game", "Details", "Game", new { id = Model.ParentGameID } , null)
 </p>

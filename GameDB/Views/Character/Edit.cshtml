@@ -7,7 +7,7 @@
 <h2>Edit</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Character", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     
@@ -42,11 +42,37 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ImageMimeType, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ImageMimeType, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ImageMimeType, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.ImageData, new { htmlAttributes = new { @class = "form-control" } })
             </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.ImageMimeType, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div style="position:relative;">
+                <label>Image</label>
+                <a class="btn" href="javascript:;">
+                    Choose File...
+                    <input type="file" name="Image" size="40"
+                           style="position:absolute; z-index:2;top:0;left:0;filter: alpha(opacity=0); opacity:0;
+                                background-color:transparent;color:transparent;"
+                           onchange='$("#upload-file-info").html($(this).val());'>
+                </a>
+                <span class="label label-info" id="upload-file-info"></span>
+            </div>
+            @if (Model.ImageData == null)
+            {
+                <div class="form-control-static">No Image</div>
+            }
+            else
+            {
+                <img class="img-thumbnail" width="150" height="150" src='@Url.Action("GetImage","Character", new { id = Model.CharacterID } )' />
+            }
         </div>
 
         <div class="form-group">
@@ -58,7 +84,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to Game", "Details", "Game", new {id = Model.ParentGameID }, null)
 </div>
 
 @section Scripts {

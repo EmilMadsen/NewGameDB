@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace GameDB.Controllers
 {
+
     public class GameController : Controller
     {
         GameRepository GameRepo = new GameRepository();

@@ -26,6 +26,12 @@ namespace GameDB.Repositories
             return db.Platforms.ToList();
         }
 
+        public List<Platform> GetAll(string search = "")
+        {
+            var selectedPlatforms = (from p in db.Platforms where p.name.Contains(search) select p).ToList();
+            return selectedPlatforms;
+        }
+
         public void InsertOrUpdate(Platform platform)
         {
             if (platform.PlatformID == 0)

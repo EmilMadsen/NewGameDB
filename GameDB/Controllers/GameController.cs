@@ -11,8 +11,14 @@ namespace GameDB.Controllers
 
     public class GameController : Controller
     {
-        GameRepository GameRepo = new GameRepository();
-        CharacterRepository CharRepo = new CharacterRepository();
+        IRepository<Game> GameRepo; // = new GameRepository();
+        IRepository<Character> CharRepo; // = new CharacterRepository();
+
+        public GameController(GameRepository GameRepo, CharacterRepository CharRepo)
+        {
+            this.GameRepo = GameRepo;
+            this.CharRepo = CharRepo;
+        }
 
         public ActionResult Index(string search = "")
         {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GameDB.Repositories
 {
-    interface IRepository<T>
+    public interface IRepository<T>
     {
         List<T> GetAll();
         List<T> GetAll(String search);

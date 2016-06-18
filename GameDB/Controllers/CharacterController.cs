@@ -13,7 +13,7 @@ namespace GameDB.Controllers
         IRepository<Character> CharRepo; // = new CharacterRepository();
         IRepository<Game> GameRepo; // = new GameRepository();
 
-        public CharacterController(CharacterRepository CharRepo, GameRepository GameRepo)
+        public CharacterController(IRepository<Character> CharRepo, IRepository<Game> GameRepo)
         {
             this.CharRepo = CharRepo;
             this.GameRepo = GameRepo;

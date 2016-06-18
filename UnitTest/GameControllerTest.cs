@@ -148,7 +148,7 @@ namespace UnitTest
             var view = Controller.Delete(Game1.GameID) as ViewResult;
 
             // Assert
-            //Assert.AreEqual(games.Count, view.Model.Count);
+            //Assert.AreNotEqual(games.Count, view.Model.Count);
             Assert.AreEqual("Index", view.ViewName);
         }
     }

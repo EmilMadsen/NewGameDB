@@ -28,6 +28,12 @@ namespace GameDB.Repositories
             return db.Characters.ToList();
         }
 
+        public List<Character> GetAll(string search = "")
+        {
+            var selectedCharacters = (from c in db.Characters where c.Name.Contains(search) select c).ToList();
+            return selectedCharacters;
+        }
+
         public void InsertOrUpdate(Character character)
         {
             if (character.CharacterID == 0)
